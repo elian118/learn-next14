@@ -1,5 +1,6 @@
 import React from 'react';
 import {API_URL} from "../constants";
+import styles from '../styles/movie-videos.module.css';
 
 const getVideos = async (id: string) => {
     // 서버 응답이 느린 상황 의도적 연출
@@ -14,7 +15,16 @@ const getVideos = async (id: string) => {
 const MovieVideos = async ({ id }: { id: string }) => {
     const videos = await getVideos(id);
     return (
-        <h6>{JSON.stringify(videos)}</h6>
+        <div className={styles.container}>
+            {videos.map(video => (
+              <iframe
+                key={video.id}
+                src={`https://youtube.com/embed/${video.key}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                title={video.name}
+              />
+            ))}
+        </div>
     );
 };
 
